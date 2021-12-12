@@ -2,7 +2,8 @@ import sys
 from time import gmtime, strftime
 
 
-def my_write(string_text):
+def my_write(string_text: str):
+    """добавление времени вызова функции print в начале строки"""
     if string_text == '\n':
         pass
     else:
@@ -10,7 +11,8 @@ def my_write(string_text):
         original_write('[' + now + ']' + ': ' + string_text + '\n')
 
 
-def timed_output(function):
+def timed_output(function: callable):
+    """декоратор, добавляющий указание времени вызова фукнции print"""
     def wrapper(name):
         now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         sys.stdout.write('[' + now + ']' + ': ')
@@ -19,12 +21,13 @@ def timed_output(function):
 
 
 @timed_output
-def print_greeting(name):
+def print_greeting(name: str):
     print(f'Hello, {name}!')
 
 
-def redirect_output(filepath):
-    def decorator(function):
+def redirect_output(filepath: str):
+    """доекторатор, перенаправляющий вывод функции в указанный файл"""
+    def decorator(function: callable):
         def wrapper():
             stdout = sys.stdout
             try:
